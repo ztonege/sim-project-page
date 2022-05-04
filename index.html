@@ -1,115 +1,146 @@
-<script src="http://www.google.com/jsapi" type="text/javascript"></script> 
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript">google.load("jquery", "1.3.2");</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+	MathJax = {
+		tex: {
+			inlineMath: [['$', '$']]
+		}
+	};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
 
 <style type="text/css">
 	body {
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-		font-weight:300;
-		font-size:18px;
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-weight: 300;
+		font-size: 18px;
 		margin-left: auto;
 		margin-right: auto;
 		width: 1100px;
 	}
-	
+
 	h1 {
-		font-size:32px;
-		font-weight:300;
+		font-size: 32px;
+		font-weight: 300;
 	}
-	
+
 	.disclaimerbox {
-		background-color: #eee;		
+		background-color: #eee;
 		border: 1px solid #eeeeee;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
 		padding: 20px;
 	}
 
 	video.header-vid {
 		height: 140px;
 		border: 1px solid black;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
 	}
-	
+
 	img.header-img {
 		height: 140px;
 		border: 1px solid black;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
 	}
-	
+
 	img.rounded {
 		border: 1px solid #eeeeee;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
 	}
-	
-	a:link,a:visited
-	{
+
+	a:link,
+	a:visited {
 		color: #1367a7;
 		text-decoration: none;
 	}
+
 	a:hover {
 		color: #208799;
 	}
-	
+
 	td.dl-link {
 		height: 160px;
 		text-align: center;
 		font-size: 22px;
 	}
-	
-	.layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+
+	.layered-paper-big {
+		/* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
 		box-shadow:
-		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
-		5px 5px 0 0px #fff, /* The second layer */
-		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
-		10px 10px 0 0px #fff, /* The third layer */
-		10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
-		15px 15px 0 0px #fff, /* The fourth layer */
-		15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
-		20px 20px 0 0px #fff, /* The fifth layer */
-		20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
-		25px 25px 0 0px #fff, /* The fifth layer */
-		25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+			0px 0px 1px 1px rgba(0, 0, 0, 0.35),
+			/* The top layer shadow */
+			5px 5px 0 0px #fff,
+			/* The second layer */
+			5px 5px 1px 1px rgba(0, 0, 0, 0.35),
+			/* The second layer shadow */
+			10px 10px 0 0px #fff,
+			/* The third layer */
+			10px 10px 1px 1px rgba(0, 0, 0, 0.35),
+			/* The third layer shadow */
+			15px 15px 0 0px #fff,
+			/* The fourth layer */
+			15px 15px 1px 1px rgba(0, 0, 0, 0.35),
+			/* The fourth layer shadow */
+			20px 20px 0 0px #fff,
+			/* The fifth layer */
+			20px 20px 1px 1px rgba(0, 0, 0, 0.35),
+			/* The fifth layer shadow */
+			25px 25px 0 0px #fff,
+			/* The fifth layer */
+			25px 25px 1px 1px rgba(0, 0, 0, 0.35);
+		/* The fifth layer shadow */
 		margin-left: 10px;
 		margin-right: 45px;
 	}
 
-	.paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+	.paper-big {
+		/* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
 		box-shadow:
-		0px 0px 1px 1px rgba(0,0,0,0.35); /* The top layer shadow */
+			0px 0px 1px 1px rgba(0, 0, 0, 0.35);
+		/* The top layer shadow */
 
 		margin-left: 10px;
 		margin-right: 45px;
 	}
 
 
-	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+	.layered-paper {
+		/* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
 		box-shadow:
-		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
-		5px 5px 0 0px #fff, /* The second layer */
-		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
-		10px 10px 0 0px #fff, /* The third layer */
-		10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+			0px 0px 1px 1px rgba(0, 0, 0, 0.35),
+			/* The top layer shadow */
+			5px 5px 0 0px #fff,
+			/* The second layer */
+			5px 5px 1px 1px rgba(0, 0, 0, 0.35),
+			/* The second layer shadow */
+			10px 10px 0 0px #fff,
+			/* The third layer */
+			10px 10px 1px 1px rgba(0, 0, 0, 0.35);
+		/* The third layer shadow */
 		margin-top: 5px;
 		margin-left: 10px;
 		margin-right: 30px;
 		margin-bottom: 5px;
 	}
-	
+
 	.vert-cent {
 		position: relative;
 		top: 50%;
 		transform: translateY(-50%);
 	}
-	
-	hr
-	{
+
+	hr {
 		border: 0;
 		height: 1px;
 		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
@@ -117,18 +148,20 @@
 </style>
 
 <html>
+
 <head>
-	<title>This is my paper title</title>
-	<meta property="og:image" content="Path to my teaser.png"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
+	<title>Shift Invariant Module</title>
+	<meta property="og:image" content="Path to my teaser.png" />
+	<!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
 	<meta property="og:title" content="Creative and Descriptive Paper Title." />
 	<meta property="og:description" content="Paper description." />
 
 	<!-- Get from Google Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src=""></script> 
+	<script async src=""></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
+		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'UA-75863369-6');
@@ -138,23 +171,28 @@
 <body>
 	<br>
 	<center>
-		<span style="font-size:36px">Creative and Descriptive Paper Title</span>
+		<span style="font-size:36px">Shift Invariant Module</span>
 		<table align=center width=600px>
 			<table align=center width=600px>
 				<tr>
 					<td align=center width=100px>
 						<center>
-							<span style="font-size:24px"><a href="https://en.wikipedia.org/wiki/James_J._Gibson">First Author</a></span>
+							<span style="font-size:18px">Nian-Hsuan Tsai (ntsai)</a></span>
 						</center>
 					</td>
 					<td align=center width=100px>
 						<center>
-							<span style="font-size:24px"><a href="https://en.wikipedia.org/wiki/James_J._Gibson">Second Author</a></span>
+							<span style="font-size:18px">Fong-An Chang (fonganc)</a></span>
 						</center>
 					</td>
 					<td align=center width=100px>
 						<center>
-							<span style="font-size:24px"><a href="https://en.wikipedia.org/wiki/James_J._Gibson">Third Author</a></span>
+							<span style="font-size:18px">Mu-Chien Hsu (muchienh)</a></span>
+						</center>
+					</td>
+					<td align=center width=100px>
+						<center>
+							<span style="font-size:18px">Kai-Hsiang Liu (kaihsial)</a></span>
 						</center>
 					</td>
 				</tr>
@@ -163,12 +201,7 @@
 				<tr>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:24px"><a href=''>[Paper]</a></span>
-						</center>
-					</td>
-					<td align=center width=120px>
-						<center>
-							<span style="font-size:24px"><a href='https://github.com/richzhang/webpage-template'>[GitHub]</a></span><br>
+							<span style="font-size:18px"><a href="">[GitHub]</a></span><br>
 						</center>
 					</td>
 				</tr>
@@ -177,20 +210,13 @@
 	</center>
 
 	<center>
-		<table align=center width=850px>
+		<table align=center>
 			<tr>
-				<td width=260px>
-					<center>
-						<img class="round" style="width:500px" src="./resources/teaser.png"/>
-					</center>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=850px>
-			<tr>
-				<td>
-					This was a template originally made for <a href="http://richzhang.github.io/colorization/">Colorful Image Colorization</a>. The code can be found in this <a href="https://github.com/richzhang/webpage-template">repository</a>.
-				</td>
+				<td> <img src="resources/teaser/shifted_img_6.gif" style="height: 200px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_original_6.gif" style="height: 200px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_aacnn_6.gif" style="height: 200px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_group_6.gif" style="height: 200px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_3D_conv_6.gif" style="height: 200px;" /> </td>
 			</tr>
 		</table>
 	</center>
@@ -198,19 +224,64 @@
 	<hr>
 
 	<table align=center width=850px>
-		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				This is my abstract.
+				<h1>Abstract</h1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Convolutional neural networks (CNN) are not shift-invariant and are very sensitive to small shifts of
+				input images. This problem arises when images are downsized in the network without taking the sampling
+				theorem into account. Some architectures were proposed to solve this problem by applying blur filters to
+				the feature maps but we do not think that this is the best solution since the strong inductive bias may
+				not apply to all scenarios. Here, we propose two shift-invariant modules that can combat the aliasing
+				problem that replacing layers in the existing state-of-the-art models in a plug-and-play fashion. We
+				tested our modules on the ImageNet dataset for solving classification problems. Our results outperform
+				the existing works in stability and robustness perspectives.
 			</td>
 		</tr>
 	</table>
 	<br>
 
 	<hr>
-	<center><h1>Talk</h1></center>
+	<table align=center width=850px>
+		<tr>
+			<td>
+				<h1>1. Introduction</h1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Convolutional neural networks have been proved to be a powerful tool to tackle tasks regarding images
+				and videos such as image classification, semantic segmentation, and object tracking. Conventional
+				convolutional models often heavily rely on max pool layer and convolution operations with strides larger
+				than one to downsample the spatial range of the input. However, naively pulling information by applying
+				stride operations to down-sample a complex image will inevitably lead to information loss. One simple
+				example is applying stride 2, 2x1 max pool to a 1D signal 100100 with 0 paddings, we will obtain 110,
+				but if we shift the signal to right by 1 bit, the signal changes to 00100, and the output with the same
+				pooling setting becomes 010, and we cannot recover the original signal with either of the output
+				signals. We can observe from the toy example that convolutional neural networks are not shift-invariant.
+				<br><br>
+
+				Richard Zhang [1] have shown in their paper that the confidence score for classification problems with
+				Alexnet and ResNet can vary drastically while the input images are shifted in pixel level. Also, they
+				proposed using Gaussian blur to share pixel information between neighboring pixels to perform
+				anti-aliasing convolution.<br><br>
+
+				However, we think naively applying Gaussian blur will lose sharpness information.
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<hr>
+	<center>
+		<h1>Talk</h1>
+	</center>
 	<p align="center">
-		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
+		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
+			allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
 	</p>
 
 	<table align=center width=800px>
@@ -224,7 +295,9 @@
 	</table>
 	<hr>
 
-	<center><h1>Code</h1></center>
+	<center>
+		<h1>Code</h1>
+	</center>
 
 	<table align=center width=420px>
 		<center>
@@ -238,8 +311,8 @@
 		<tr>
 			<td align=center width=400px>
 				<center>
-					<td><img class="round" style="width:450px" src="./resources/method_diagram.png"/></td>
-				</center>
+			<td><img class="round" style="width:450px" src="./resources/method_diagram.png" /></td>
+			</center>
 			</td>
 		</tr>
 	</table>
@@ -254,24 +327,27 @@
 	</table>
 	<table align=center width=800px>
 		<br>
-		<tr><center>
-			<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/webpage-template'>[GitHub]</a>
+		<tr>
+			<center>
+				<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/webpage-template'>[GitHub]</a>
 			</center>
-		</span>
+			</span>
 	</table>
 	<br>
 	<hr>
 	<table align=center width=450px>
-		<center><h1>Paper and Supplementary Material</h1></center>
+		<center>
+			<h1>Paper and Supplementary Material</h1>
+		</center>
 		<tr>
-			<td><a href=""><img class="layered-paper-big" style="height:175px" src="./resources/paper.png"/></a></td>
+			<td><a href=""><img class="layered-paper-big" style="height:175px" src="./resources/paper.png" /></a></td>
 			<td><span style="font-size:14pt">F. Author, S. Author, T. Author.<br>
-				<b>Creative and Descriptive Paper Title.</b><br>
-				In Conference, 20XX.<br>
-				(hosted on <a href="">ArXiv</a>)<br>
-				<!-- (<a href="./resources/camera-ready.pdf">camera ready</a>)<br> -->
-				<span style="font-size:4pt"><a href=""><br></a>
-				</span>
+					<b>Creative and Descriptive Paper Title.</b><br>
+					In Conference, 20XX.<br>
+					(hosted on <a href="">ArXiv</a>)<br>
+					<!-- (<a href="./resources/camera-ready.pdf">camera ready</a>)<br> -->
+					<span style="font-size:4pt"><a href=""><br></a>
+					</span>
 			</td>
 		</tr>
 	</table>
@@ -279,9 +355,11 @@
 
 	<table align=center width=600px>
 		<tr>
-			<td><span style="font-size:14pt"><center>
-				<a href="./resources/bibtex.txt">[Bibtex]</a>
-			</center></td>
+			<td><span style="font-size:14pt">
+					<center>
+						<a href="./resources/bibtex.txt">[Bibtex]</a>
+					</center>
+			</td>
 		</tr>
 	</table>
 
@@ -292,14 +370,19 @@
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h1>Acknowledgements</h1></center>
-					This template was originally made by <a href="http://web.mit.edu/phillipi/">Phillip Isola</a> and <a href="http://richzhang.github.io/">Richard Zhang</a> for a <a href="http://richzhang.github.io/colorization/">colorful</a> ECCV project; the code can be found <a href="https://github.com/richzhang/webpage-template">here</a>.
+					<center>
+						<h1>Acknowledgements</h1>
+					</center>
+					This template was originally made by <a href="http://web.mit.edu/phillipi/">Phillip Isola</a> and <a
+						href="http://richzhang.github.io/">Richard Zhang</a> for a <a
+						href="http://richzhang.github.io/colorization/">colorful</a> ECCV project; the code can be found
+					<a href="https://github.com/richzhang/webpage-template">here</a>.
 				</left>
 			</td>
 		</tr>
 	</table>
 
-<br>
+	<br>
 </body>
-</html>
 
+</html>
