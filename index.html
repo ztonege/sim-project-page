@@ -276,11 +276,11 @@
 	<center>
 		<table align=center>
 			<tr>
-				<td> <img src="resources/teaser/shifted_img_6.gif" style="height: 250px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_original_6.gif" style="height: 250px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_aacnn_6.gif" style="height: 250px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_group_6.gif" style="height: 250px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_3D_conv_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/gifs/shifted_img_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/gifs/boxplot_original_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/gifs/boxplot_aacnn_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/gifs/boxplot_group_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/gifs/boxplot_3D_conv_6.gif" style="height: 250px;" /> </td>
 			</tr>
 		</table>
 	</center>
@@ -662,7 +662,7 @@
 				Where $\Delta$ is $\text{Shift}_{h1,w1}$(X). <br>
 				We report our results in consistency and accuracy in Table <a href="#consistency_table">1</a>. It shows
 				that our model outperforms both baseline models in classification consistency. Our model also achieves
-				higher accuracy when compared to the original ResNet and our accuracy is only lower than AACNN
+				higher accuracy when compared to the ResNet and our accuracy is only lower than AACNN
 				<a href="aacnn">[1]</a> by 0.4%. It's noteworthy that even though our accuracy is less than baseline,
 				the robustness of our module leads to a most classification consistent model.
 				<br>
@@ -710,7 +710,7 @@
 			<td style="text-align:center;">
 				Table 1: Classification consistency and accuracy comparison for different models. We show the
 				classification consistency and accuracy in percentage. Both of our models perform better than the
-				baseline models in classification consistency and perform better than the original ResNet-18 in top-1
+				baseline models in classification consistency and perform better than the ResNet-18 in top-1
 				and top-5 accuracy.
 			</td>
 		</tr>
@@ -731,19 +731,82 @@
 					href="#aacnn">[1]</a>,
 				our group convolution model and our 3D convolution model. <br><br>
 
-				In figure \ref{fig:line_chart}, we show the confidence score of the correct class at different shift
+				In Figure <a href="#line_chart_success">9</a>, we show the confidence score of the correct class at
+				different shift
 				positions on the right and the input image on the left. For ResNet (dotted-red line), the confidence
 				score varies a lot across different shift positions, AACNN (dotted-green line) has less variance and
 				sometimes achieves a higher confidence score when compared to ResNet. On the other hand, the confidence
 				score for both of our models (3D convolution and group convolution) are much more stable and has a
 				higher confidence score than ResNet and AACNN. <br><br>
 
-				In figure \ref{fig:failed_line_chart}, we show an example where our models have a lower confidence score
+				In Figure <a href="#line_chart_failed">10</a>, we show an example where our models have a lower
+				confidence score
 				than the baseline model. However, in this case, our models' confidence scores our still much more stable
 				than the 2 baseline models. This shows that our method is more shift tolerant.
 			</td>
 		</tr>
 	</table>
+	<br>
+
+	<table align="center" id="line_chart_success">
+		<tr>
+			<td style="text-align:center;"> <img src="resources/line_chart_static_image/img_b_0_idx_63.png"
+					style="height: 150px;" /> </td>
+			<td style="text-align:center;"> <img src="resources/line_chart/b_0_idx_63.png" style="height: 150px;" />
+			</td>
+			<td style="text-align:center;"> <img src="resources/line_chart_static_image/img_b_20_idx_33.png"
+					style="height: 150px;" /> </td>
+			<td style="text-align:center;"> <img src="resources/line_chart/b_20_idx_33.png" style="height: 150px;" />
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;"> <img src="resources/line_chart_static_image/img_b_38_idx_46.png"
+					style="height: 150px;" /> </td>
+			<td style="text-align:center;"> <img src="resources/line_chart/b_38_idx_46.png" style="height: 150px;" />
+			</td>
+			<td style="text-align:center;"> <img src="resources/line_chart_static_image/img_b_132_idx_109.png"
+					style="height: 150px;" /> </td>
+			<td style="text-align:center;"> <img src="resources/line_chart/b_132_idx_109.png" style="height: 150px;" />
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;"> <img src="resources/line_chart_static_image/img_b_379_idx_71.png"
+					style="height: 150px;" /> </td>
+			<td style="text-align:center;"> <img src="resources/line_chart/b_379_idx_71.png" style="height: 150px;" />
+			</td>
+		</tr>
+	</table>
+	<table align=center width=850px>
+		<tr>
+			<td style="text-align:center;">
+				Figure 9: Comparing prediction confidence between inputs at different shift positions.
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<table align="center" id="line_chart_failed">
+		<tr>
+			<td style="text-align:center;"> <img src="resources/line_chart_static_image/img_b_251_idx_19.png"
+					style="height: 250px;" /> </td>
+			<td style="text-align:center;"> <img src="resources/line_chart/b_251_idx_19.png" style="height: 250px;" />
+			</td>
+		</tr>
+	</table>
+	<table align=center width=850px>
+		<tr>
+			<td style="text-align:center;">
+				Figure 10: Here we show an example where our models (blue and orange lines) perform worse in prediction
+				confidence when comparing with ResNet and AACNN <a href="#aacnn">[1]</a> (green and red dot lines).
+				However,
+				our models are still predicting correctly and our prediction confidence is much more stable across pixel
+				shifts. (ground truth label: marimba)
+			</td>
+		</tr>
+	</table>
+
+
+
 	<br>
 
 	<hr>
