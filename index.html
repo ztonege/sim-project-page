@@ -157,6 +157,33 @@
 		height: 1px;
 		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 	}
+
+	#consistency_table {
+		border-collapse: collapse;
+		width: 850px;
+	}
+
+	#consistency_table td,
+	#consistency_table th {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+
+	#consistency_table tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
+	#consistency_table tr:hover {
+		background-color: #ddd;
+	}
+
+	#consistency_table th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #04AA6D;
+		color: white;
+	}
 </style>
 
 <html>
@@ -186,7 +213,7 @@
 		<span style="font-size:48px">Shift Invariant Module</span>
 		<br>
 		<br>
-		<table align="center">
+		<table style="text-align:center;">
 			<tr>
 				<td align=center>
 					<center>
@@ -354,8 +381,19 @@
 		</tr>
 		<tr>
 			<td>
-				Our model pipeline is shown in Figure \ref{fig:pipeline}. There are four stages in our pipeline and they
+				Our model pipeline is shown in Figure <a href="#pipeline">1</a>. There are four stages in our pipeline
+				and they
 				will be explained in detail in the following subsections.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<img src="resources/pipeline.png" style="width: 850px;" id="pipeline" />
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 1: Model pipeline.
 			</td>
 		</tr>
 		<tr>
@@ -367,17 +405,52 @@
 		<tr>
 			<td>
 				Given that applying operations with stride-2 induces a loss in information as shown in Figure
-				\ref{fig:info_loss}, we first use stride-2 down-sampling four times from four different starting points
+				<a href="#loss_info">2</a>, we first use stride-2 down-sampling four times from four different starting
+				points
 				with four offsets, respectively, on our input feature map with shape $C_{in} \times H \times W$. We
 				denote $C_{in}$ as the input channel size, $H$ as the height of the input feature map, and $W$ is the
 				width of the input feature map. We named these four pixels as 4-neighbor as shown in Figure
-				\ref{fig:2x2pool}. The next step is to keep the information of the down-sampled feature map of
+				<a href="#4_neighbor">3</a>. The next step is to keep the information of the down-sampled feature map of
 				4-neighbors. Thus, we rearrange the down-sampled 4-neighbor feature maps for each input channel. For
-				example, in Figure \ref{fig:rearrange}, we have feature maps with three input channels, e.g., RGB, we
+				example, in Figure <a href="#rearrange">4</a>, we have feature maps with three input channels, e.g.,
+				RGB, we
 				rearrange them into RRRRGGGGBBBB. We believe that the spatial frequency domain information is kept by
 				doing so. Now we can view the original input channel size as a group number, e.g., RGB means three
 				groups, and see stacked 4-neighbor as a new domain, D-domain. Specifically, the shape will become
 				$4C_{in} \times \frac{H}{2} \times \frac{W}{2}$. After these operations, no information will be lost.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<img src="resources/loss_info.png" style="width: 850px;" id="loss_info" />
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 2: This figure shows that any n-stride operation with $n \geq 2$ will lead to a loss in
+				information. Figure from <a href="#aacnn">[1]</a>.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<img src="resources/4_neighbor.png" style="width: 850px;" id="4_neighbor" />
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 3: 2 by 2 dense pool example.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<center>
+					<img src="resources/rearrange.png" style="height: 250;" id="rearrange" />
+				</center>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 4: Rearranging the channels from RGB to RRRRGGGGBBBB.
 			</td>
 		</tr>
 		<tr>
@@ -395,7 +468,8 @@
 			<td>
 				After the rearrangement, we would like to apply group convolution <a href="#group_conv">[2]</a> on the
 				shuffled
-				features maps to aggregate the information. Figure \ref{fig:groupconv} shows how we apply group
+				features maps to aggregate the information. Figure <a href="#group_conv_fig">5</a> shows how we apply
+				group
 				convolution on the shuffled feature maps. We divide $4C_{in}$ into $C_{in}$ groups, e.g., three for RGB,
 				with group member as 4-neighbor. To extract D-domain information between the 4-neighbor, we apply group
 				convolution with $C_{in}$ groups to the input feature map. However, $C_{in}$ and $C_{out}$ must both be
@@ -408,6 +482,19 @@
 		</tr>
 		<tr>
 			<td>
+				<center>
+					<img src="resources/group_conv.png" style="height: 250px;" id="group_conv_fig" />
+				</center>
+
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 5: Example of how group convolution works.
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<br>
 				<h3>3.3.2 3D Convolution</h3>
 			</td>
@@ -416,7 +503,8 @@
 			<td>
 				Other than group convolution, we also used 3D convolution <a href="#3d_conv">[3]</a> to aggregate
 				information.
-				Figure \ref{fig:3dconv} shows how we apply 3D convolution on the shuffled feature maps. We grab
+				Figure <a href="#3d_conv_fig">6</a> shows how we apply 3D convolution on the shuffled feature maps. We
+				grab
 				4-neighbors out to stack as D-domain and reshape the down-sampled feature map, $4C_{in} \times
 				\frac{H}{2} \times \frac{W}{2}$, into one more dimension, $C_{in} \times 4 \times \frac{H}{2} \times
 				\frac{W}{2}$. Then, we apply 3D convolution ro convolve filters along $H$, $W$ and $D$ axis, where $D$
@@ -429,6 +517,19 @@
 				deal with this in the next section.
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<center>
+					<img src="resources/3d_conv.png" style="height: 250px;" id="3d_conv_fig" />
+				</center>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 6: Example of how 3D convolution works.
+			</td>
+		</tr>
+
 		<tr>
 			<td>
 				<br>
@@ -466,7 +567,20 @@
 				direction, i.e., vertical, and $2$-to-$3$ can be seen as diagonal direction, and $2$-to-$4$ can be
 				thought as $y$ direction again. Interestingly, this property stands for a kind of filter that can focus
 				on spatial frequency extraction, e.g., Sobel filter, but the 3D kernels possess learnable parameters, as
-				shown in Figure \ref{fig:sobel_like}
+				shown in Figure <a href="#sobel_like">7</a>.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<center>
+					<img src="resources/sobel_like.png" style="height: 250px;" id="sobel_like" />
+				</center>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 7: Learnable Sobel like filter convolves accross $1, 2, 3$ along $D$ axis. The arrows depict an
+				$x$ direction and $y$ direction spatial frequency information extraction, respectively.
 			</td>
 		</tr>
 	</table>
@@ -499,9 +613,20 @@
 		<tr>
 			<td>
 				We modify the ResNet-18 model by replacing the layers which results in down-sized feature maps with the
-				shift-invariant modules we proposed.
-				Figure \ref{fig:model} shows the model architecture we refined and the replaced layers are surrounded by
-				green boxes.
+				shift-invariant modules we proposed.Figure <a href="#model">8</a> shows the modified model architecture
+				and the replaced layers are surrounded by green boxes.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<center>
+					<img src="resources/model.png" style="width: 850px;" id="model" />
+				</center>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:center;">
+				Figure 8: Our proposed modified ResNet-18 model architecture.
 			</td>
 		</tr>
 		<tr>
@@ -535,12 +660,58 @@
 				\label{equation:consistency}
 				\end{equation}
 				Where $\Delta$ is $\text{Shift}_{h1,w1}$(X). <br>
-				We report our results in consistency and accuracy in table \ref{table:Quantitative_comparison}. It shows
+				We report our results in consistency and accuracy in Table <a href="#consistency_table">1</a>. It shows
 				that our model outperforms both baseline models in classification consistency. Our model also achieves
 				higher accuracy when compared to the original ResNet and our accuracy is only lower than AACNN
 				<a href="aacnn">[1]</a> by 0.4%. It's noteworthy that even though our accuracy is less than baseline,
-				the
-				robustness of our module leads to a most classification consistent model.
+				the robustness of our module leads to a most classification consistent model.
+				<br>
+				<br>
+			</td>
+		</tr>
+		<tr>
+			<table align="center" id="consistency_table">
+				<tr>
+					<th style="text-align:center;"> Model </th>
+					<th style="text-align:center;"> Classification <br> Consistency </th>
+					<th style="text-align:center;"> Top 1 Accuracy </th>
+					<th style="text-align:center;"> Top 5 Accuracy </th>
+				</tr>
+				<tr>
+					<td style="text-align:center;"> ResNet-18 (baseline) </td>
+					<td style="text-align:center;"> 83.01 </td>
+					<td style="text-align:center;"> 65.36 </td>
+					<td style="text-align:center;"> 87.00 </td>
+				</tr>
+				<tr>
+					<td style="text-align:center;"> AACNN$_{[1]}$ (baseline) </td>
+					<td style="text-align:center;"> 87.83 </td>
+					<td style="text-align:center;"> <b>69.12</b> </td>
+					<td style="text-align:center;"> <b>89.05</b> </td>
+				</tr>
+				<tr>
+					<td style="text-align:center;"> Group Conv (ours) </td>
+					<td style="text-align:center;"> <b>90.42</b> </td>
+					<td style="text-align:center;"> 68.78 </td>
+					<td style="text-align:center;"> 88.74 </td>
+				</tr>
+				<tr>
+					<td style="text-align:center;"> 3D Conv (ours) </td>
+					<td style="text-align:center;"> <b>90.20</b> </td>
+					<td style="text-align:center;"> 68.56 </td>
+					<td style="text-align:center;"> 88.41 </td>
+				</tr>
+			</table>
+		</tr>
+	</table>
+
+	<table align="center" width="850px">
+		<tr>
+			<td style="text-align:center;">
+				Table 1: Classification consistency and accuracy comparison for different models. We show the
+				classification consistency and accuracy in percentage. Both of our models perform better than the
+				baseline models in classification consistency and perform better than the original ResNet-18 in top-1
+				and top-5 accuracy.
 			</td>
 		</tr>
 		<tr>
