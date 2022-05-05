@@ -509,7 +509,7 @@
 				grab
 				4-neighbors out to stack as D-domain and reshape the down-sampled feature map, $4C_{in} \times
 				\frac{H}{2} \times \frac{W}{2}$, into one more dimension, $C_{in} \times 4 \times \frac{H}{2} \times
-				\frac{W}{2}$. Then, we apply 3D convolution ro convolve filters along $H$, $W$ and $D$ axis, where $D$
+				\frac{W}{2}$. Then, we apply 3D convolution to convolve filters along $H$, $W$ and $D$ axis, where $D$
 				axis has a fixed size of $4$. Using filters with size $3$, stride $1$, and padding $0$ on $D$ axis, the
 				filter can only convolve twice, i.e., layer $1, 2, 3$ and then $2, 3, 4$. Hence the output size along
 				$D$ domain will become $2$. For $H$ and $W$ domain, we simply keep the down-sampled size after 3D
@@ -562,8 +562,8 @@
 				(group convolution / 3D convolution) the information among 4-neighbor.
 				After stacking 4 sub-sampled feature maps from 4 starting offsets, there is no information loss up to
 				this point. To extract the information, group convolution and 3D convolution come into play. For group
-				convolution, it divides its learnable parameters into groups without connections between input feature
-				maps, this helps the model focus on feature extraction of each group separately. On the other hand, 3D
+				convolution, it divides its learnable parameters into groups without fully connections between input feature maps
+				and learnable filters, this helps the model focus on feature extraction of each group separately. On the other hand, 3D
 				convolution convolves its filters along the $D$ axis going through $1, 2, 3$ and then $2, 3, 4$. Note
 				that $1$-to-$2$ can be viewed as $x$ direction, i.e., horizontal, $1$-to-$3$ can be considered as $y$
 				direction, i.e., vertical, and $2$-to-$3$ can be seen as diagonal direction, and $2$-to-$4$ can be
