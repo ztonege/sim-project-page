@@ -30,12 +30,12 @@
 	}
 
 	h2 {
-		font-size: 24px;
+		font-size: 28px;
 		font-weight: 300;
 	}
 
 	h3 {
-		font-size: 20px;
+		font-size: 24px;
 		font-weight: 300;
 	}
 
@@ -79,6 +79,10 @@
 
 	a:hover {
 		color: #208799;
+	}
+
+	td {
+		font-size: 20px;
 	}
 
 	td.dl-link {
@@ -181,7 +185,7 @@
 		padding-top: 12px;
 		padding-bottom: 12px;
 		text-align: left;
-		background-color: #04AA6D;
+		background-color: #179987;
 		color: white;
 	}
 </style>
@@ -218,22 +222,22 @@
 				<tr>
 					<td align=center width=100px>
 						<center>
-							<span style="font-size:18px">Nian-Hsuan Tsai (ntsai)</a></span>
+							<span>Nian-Hsuan Tsai (ntsai)</a></span>
 						</center>
 					</td>
 					<td align=center width=100px>
 						<center>
-							<span style="font-size:18px">Fong-An Chang (fonganc)</a></span>
+							<span>Fong-An Chang (fonganc)</a></span>
 						</center>
 					</td>
 					<td align=center width=100px>
 						<center>
-							<span style="font-size:18px">Mu-Chien Hsu (muchienh)</a></span>
+							<span>Mu-Chien Hsu (muchienh)</a></span>
 						</center>
 					</td>
 					<td align=center width=100px>
 						<center>
-							<span style="font-size:18px">Kai-Hsiang Liu (kaihsial)</a></span>
+							<span>Kai-Hsiang Liu (kaihsial)</a></span>
 						</center>
 					</td>
 				</tr>
@@ -243,7 +247,7 @@
 				<tr>
 					<td align=center>
 						<center>
-							<span style="font-size:18px"><a href="https://ztonege.github.io/sim-project-page/">Project
+							<span><a href="https://ztonege.github.io/sim-project-page/">Project
 									Page: https://ztonege.github.io/sim-project-page/</a></span><br>
 						</center>
 					</td>
@@ -253,18 +257,18 @@
 				<tr>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:18px"><a href="https://github.com/ztonege/sim">[Code]</a></span><br>
+							<span><a href="https://github.com/ztonege/sim">[Code]</a></span><br>
 						</center>
 					</td>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:18px"><a
+							<span><a
 									href="https://drive.google.com/drive/folders/1MoKYudyYoKCXPT3SK7gqhBPGEDQhyqyT?usp=sharing">[Slides]</a></span><br>
 						</center>
 					</td>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:18px"><a
+							<span><a
 									href="https://drive.google.com/drive/folders/1qwpr6DQpxHOILhmWxAN41IKxM9jJg9_a?usp=sharing">[Report]</a></span><br>
 						</center>
 					</td>
@@ -562,8 +566,10 @@
 				(group convolution / 3D convolution) the information among 4-neighbor.
 				After stacking 4 sub-sampled feature maps from 4 starting offsets, there is no information loss up to
 				this point. To extract the information, group convolution and 3D convolution come into play. For group
-				convolution, it divides its learnable parameters into groups without fully connections between input feature maps
-				and learnable filters, this helps the model focus on feature extraction of each group separately. On the other hand, 3D
+				convolution, it divides its learnable parameters into groups without fully connections between input
+				feature maps
+				and learnable filters, this helps the model focus on feature extraction of each group separately. On the
+				other hand, 3D
 				convolution convolves its filters along the $D$ axis going through $1, 2, 3$ and then $2, 3, 4$. Note
 				that $1$-to-$2$ can be viewed as $x$ direction, i.e., horizontal, $1$-to-$3$ can be considered as $y$
 				direction, i.e., vertical, and $2$-to-$3$ can be seen as diagonal direction, and $2$-to-$4$ can be
