@@ -1,7 +1,9 @@
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript">google.load("jquery", "1.3.2");</script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="text/javascript" id="MathJax-script" async
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.0.0/es5/latest?tex-mml-chtml.js">
+	</script>
 <script>
 	MathJax = {
 		tex: {
@@ -24,6 +26,16 @@
 
 	h1 {
 		font-size: 32px;
+		font-weight: 300;
+	}
+
+	h2 {
+		font-size: 24px;
+		font-weight: 300;
+	}
+
+	h3 {
+		font-size: 20px;
 		font-weight: 300;
 	}
 
@@ -171,7 +183,19 @@
 <body>
 	<br>
 	<center>
-		<span style="font-size:36px">Shift Invariant Module</span>
+		<span style="font-size:48px">Shift Invariant Module</span>
+		<br>
+		<br>
+		<table align="center">
+			<tr>
+				<td align=center>
+					<center>
+						<span style="font-size:18px"><a href="https://ztonege.github.io/sim-project-page/">Project
+								Page: https://ztonege.github.io/sim-project-page/</a></span><br>
+					</center>
+				</td>
+			</tr>
+		</table>
 		<table align=center width=600px>
 			<table align=center width=600px>
 				<tr>
@@ -197,32 +221,44 @@
 					</td>
 				</tr>
 			</table>
+			<br>
 			<table align=center width=250px>
 				<tr>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:18px"><a href="">[GitHub]</a></span><br>
+							<span style="font-size:18px"><a href="">[Code]</a></span><br>
+						</center>
+					</td>
+					<td align=center width=120px>
+						<center>
+							<span style="font-size:18px"><a href="">[Slides]</a></span><br>
+						</center>
+					</td>
+					<td align=center width=120px>
+						<center>
+							<span style="font-size:18px"><a href="">[Report]</a></span><br>
 						</center>
 					</td>
 				</tr>
 			</table>
 		</table>
 	</center>
+	<br>
+	<br>
 
 	<center>
 		<table align=center>
 			<tr>
-				<td> <img src="resources/teaser/shifted_img_6.gif" style="height: 200px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_original_6.gif" style="height: 200px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_aacnn_6.gif" style="height: 200px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_group_6.gif" style="height: 200px;" /> </td>
-				<td> <img src="resources/teaser/boxplot_3D_conv_6.gif" style="height: 200px;" /> </td>
+				<td> <img src="resources/teaser/shifted_img_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_original_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_aacnn_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_group_6.gif" style="height: 250px;" /> </td>
+				<td> <img src="resources/teaser/boxplot_3D_conv_6.gif" style="height: 250px;" /> </td>
 			</tr>
 		</table>
 	</center>
 
 	<hr>
-
 	<table align=center width=850px>
 		<tr>
 			<td>
@@ -258,43 +294,328 @@
 				convolutional models often heavily rely on max pool layer and convolution operations with strides larger
 				than one to downsample the spatial range of the input. However, naively pulling information by applying
 				stride operations to down-sample a complex image will inevitably lead to information loss. One simple
-				example is applying stride 2, 2x1 max pool to a 1D signal 100100 with 0 paddings, we will obtain 110,
+				example is applying stride 2, $2 \times 1$ max pool to a 1D signal 100100 with 0 paddings, we will
+				obtain 110,
 				but if we shift the signal to right by 1 bit, the signal changes to 00100, and the output with the same
 				pooling setting becomes 010, and we cannot recover the original signal with either of the output
-				signals. We can observe from the toy example that convolutional neural networks are not shift-invariant.
-				<br><br>
-
-				Richard Zhang [1] have shown in their paper that the confidence score for classification problems with
-				Alexnet and ResNet can vary drastically while the input images are shifted in pixel level. Also, they
-				proposed using Gaussian blur to share pixel information between neighboring pixels to perform
-				anti-aliasing convolution.<br><br>
-
-				However, we think naively applying Gaussian blur will lose sharpness information.
+				signals. We can observe from the toy example that convolutional neural networks are not
+				shift-invariant. <br><br>
+				Richard Zhang <a href="#aacnn">[1]</a> have shown in their paper that the confidence score for
+				classification
+				problems with Alexnet and ResNet can vary drastically while the input images are shifted in pixel level.
+				Also, they proposed using Gaussian blur to share pixel information between neighboring pixels before max
+				pooling to perform anti-aliasing convolution. However, naively applying Gaussian blur would reduce the
+				sharpness of the image, we thus proposed a new module to implement shift-invariant convolution while
+				preserving the sharpness. Our method uses the dense pool, group convolution, or 3D convolution to
+				replace conventional stride operation for downsampling, for the kernels are learned, sharpness of the
+				image would be preserved as well. We evaluate our model on Imagenet and use ResNet-18 as backbone
+				architecture. Our results showed that our models outperformed previous methods on (1) classification
+				consistency, our model has a classification consistency score of 90.42% and 90.20% which
+				is much higher than previous methods (83.01% and 87.83%), and (2) accuracy, our model has 68.78%
+				top1 accuracy and 88.74% top5 accuracy, and (3) stability, our model has higher stability in
+				the confidence score to the same image while shifted.
 			</td>
 		</tr>
 	</table>
 	<br>
 
 	<hr>
-	<center>
-		<h1>Talk</h1>
-	</center>
-	<p align="center">
-		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
-			allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
-	</p>
-
-	<table align=center width=800px>
-		<br>
+	<table align=center width=850px>
 		<tr>
-			<center>
-				<span style="font-size:28px"><a href=''>[Slides]</a>
-				</span>
-			</center>
+			<td>
+				<h1>2. Related Work</h1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				In <a href="#aacnn">[1]</a>, Richard Zhang introduces anti-aliasing filters by applying blur filters
+				after the dense
+				evaluation operation. In more detail, he used a max-pooling operation with a stride equal to one and
+				then blurred images by the proposed hard-coded Gaussian kernel for sharing information with neighboring
+				pixels. Finally, we downsize the images. The first two steps preserve the shift-invariance property. In
+				the last step, even though the shift-invariance property is not preserved, the aliasing effect is
+				reduced because of the added blur.
+			</td>
 		</tr>
 	</table>
-	<hr>
+	<br>
 
+	<hr>
+	<table align=center width=850px>
+		<tr>
+			<td>
+				<h1>3. Method</h1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h2>3.1 Model Pipeline</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Our model pipeline is shown in Figure \ref{fig:pipeline}. There are four stages in our pipeline and they
+				will be explained in detail in the following subsections.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>3.2 Sub-sampling and Rearranging</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Given that applying operations with stride-2 induces a loss in information as shown in Figure
+				\ref{fig:info_loss}, we first use stride-2 down-sampling four times from four different starting points
+				with four offsets, respectively, on our input feature map with shape $C_{in} \times H \times W$. We
+				denote $C_{in}$ as the input channel size, $H$ as the height of the input feature map, and $W$ is the
+				width of the input feature map. We named these four pixels as 4-neighbor as shown in Figure
+				\ref{fig:2x2pool}. The next step is to keep the information of the down-sampled feature map of
+				4-neighbors. Thus, we rearrange the down-sampled 4-neighbor feature maps for each input channel. For
+				example, in Figure \ref{fig:rearrange}, we have feature maps with three input channels, e.g., RGB, we
+				rearrange them into RRRRGGGGBBBB. We believe that the spatial frequency domain information is kept by
+				doing so. Now we can view the original input channel size as a group number, e.g., RGB means three
+				groups, and see stacked 4-neighbor as a new domain, D-domain. Specifically, the shape will become
+				$4C_{in} \times \frac{H}{2} \times \frac{W}{2}$. After these operations, no information will be lost.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>3.3 Extract D-domain Information</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>3.3.1 Group Convolution</h3>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				After the rearrangement, we would like to apply group convolution <a href="#group_conv">[2]</a> on the
+				shuffled
+				features maps to aggregate the information. Figure \ref{fig:groupconv} shows how we apply group
+				convolution on the shuffled feature maps. We divide $4C_{in}$ into $C_{in}$ groups, e.g., three for RGB,
+				with group member as 4-neighbor. To extract D-domain information between the 4-neighbor, we apply group
+				convolution with $C_{in}$ groups to the input feature map. However, $C_{in}$ and $C_{out}$ must both be
+				divisible by the group number, where $C_{out}$ is the number of the expected output channels. Hence we
+				take the least common multiple of $C_{in}$ and $C_{out}$ as our temporary number of output channels, so
+				we can divide the output filters into $C_{in}$ groups. Now, the temporary output channels after group
+				convolution might be larger than the expected output channels, $C_{out}$. We will deal with the issue in
+				section 4.4.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h3>3.3.2 3D Convolution</h3>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Other than group convolution, we also used 3D convolution <a href="#3d_conv">[3]</a> to aggregate
+				information.
+				Figure \ref{fig:3dconv} shows how we apply 3D convolution on the shuffled feature maps. We grab
+				4-neighbors out to stack as D-domain and reshape the down-sampled feature map, $4C_{in} \times
+				\frac{H}{2} \times \frac{W}{2}$, into one more dimension, $C_{in} \times 4 \times \frac{H}{2} \times
+				\frac{W}{2}$. Then, we apply 3D convolution ro convolve filters along $H$, $W$ and $D$ axis, where $D$
+				axis has a fixed size of $4$. Using filters with size $3$, stride $1$, and padding $0$ on $D$ axis, the
+				filter can only convolve twice, i.e., layer $1, 2, 3$ and then $2, 3, 4$. Hence the output size along
+				$D$ domain will become $2$. For $H$ and $W$ domain, we simply keep the down-sampled size after 3D
+				convolution. In the end, the shape will be $C_{out} \times 2 \times \frac{H}{2} \times \frac{W}{2}$. To
+				be further used in later components of our module, we reshape it to $2C_{out} \times \frac{H}{2} \times
+				\frac{W}{2}$. Again, we have more output channels than the expected output channels, $C_{out}$. We will
+				deal with this in the next section.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>3.4 $1\times1$ Convolution</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				So far, we only focused on the relationship between 4-neighbor and extracting the useful information
+				with group convolution or 3D convolution. This encourages the model to learn to look at neighbor
+				information first however, the original information between input channels, e.g., RGB, has not been
+				merged yet. Simply applying $1\times1$ convolution at this stage lets the model see through the enlarged
+				output channels. Also, at this point, we can downsize the enlarged output channels to the expected size.
+				To be more specific, by setting the input dimension of $1\times1$ filter to the enlarged output channels
+				and setting the number of $1\times1$ filters to $C_{out}$, we can get the final output with shape
+				$C_{out} \times \frac{H}{2} \times \frac{W}{2}$.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>3.5 Module Explanation</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				The design philosophy of our module is to keep (no information loss in the first half) and extract
+				(group convolution / 3D convolution) the information among 4-neighbor.
+				After stacking 4 sub-sampled feature maps from 4 starting offsets, there is no information loss up to
+				this point. To extract the information, group convolution and 3D convolution come into play. For group
+				convolution, it divides its learnable parameters into groups without connections between input feature
+				maps, this helps the model focus on feature extraction of each group separately. On the other hand, 3D
+				convolution convolves its filters along the $D$ axis going through $1, 2, 3$ and then $2, 3, 4$. Note
+				that $1$-to-$2$ can be viewed as $x$ direction, i.e., horizontal, $1$-to-$3$ can be considered as $y$
+				direction, i.e., vertical, and $2$-to-$3$ can be seen as diagonal direction, and $2$-to-$4$ can be
+				thought as $y$ direction again. Interestingly, this property stands for a kind of filter that can focus
+				on spatial frequency extraction, e.g., Sobel filter, but the 3D kernels possess learnable parameters, as
+				shown in Figure \ref{fig:sobel_like}
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<hr>
+	<table align=center width=850px>
+		<tr>
+			<td>
+				<h1>4. Experiment</h1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h2>4.1 Dataset Description</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				We train and test on the Imagenet classification dataset with image sizes of 224 x 224. The dataset
+				contains 1.2M training and 50k validation images with a total of 1000 categories.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>4.2 Model</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				We modify the ResNet-18 model by replacing the layers which results in down-sized feature maps with the
+				shift-invariant modules we proposed.
+				Figure \ref{fig:model} shows the model architecture we refined and the replaced layers are surrounded by
+				green boxes.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>4.3 Training Setting</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				We trained our model with $16$ epochs and batch size $128$. During the training process, we set the
+				learning rate to $0.5$ and use the cyclic learning rate scheduler. We train by using stochastic gradient
+				descent with momentum $0.9$ and weight decay $5e-5$.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>4.4 Quantitative Evaluation: Classification consistency</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				The metric we use to evaluate the shift-invariance of our module is classification consistency.
+				Classification consistency was proposed in <a href="#aacnn">[1]</a> and is a simple metric where we
+				check whether
+				our model will predict the same label given that the same image with two different random shifts:
+				\begin{equation}
+				\mathbb{E}_{X, h1, w1, h2, w2}[ \mathbf{1} \{\text{argmax} \ P(\Delta X ) = \text{argmax} \ P( \Delta
+				X)\} ]\\
+				\label{equation:consistency}
+				\end{equation}
+				Where $\Delta$ is $\text{Shift}_{h1,w1}$(X). <br>
+				We report our results in consistency and accuracy in table \ref{table:Quantitative_comparison}. It shows
+				that our model outperforms both baseline models in classification consistency. Our model also achieves
+				higher accuracy when compared to the original ResNet and our accuracy is only lower than AACNN
+				<a href="aacnn">[1]</a> by 0.4%. It's noteworthy that even though our accuracy is less than baseline,
+				the
+				robustness of our module leads to a most classification consistent model.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br>
+				<h2>4.5 Qualitative Evaluation: Stability</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				For the qualitative evaluation, we report the confidence scores of the correct label for shifted inputs
+				of the same image. For each image, we obtained the prediction confidence of the correct label at
+				different positions by alternatively shifting one pixel horizontally and one pixel vertically 32 times,
+				64 shifts in total. <br><br>
+
+				We compare results correctly classified results for 4 models:base line (ResNet-18), AACNN <a
+					href="#aacnn">[1]</a>,
+				our group convolution model and our 3D convolution model. <br><br>
+
+				In figure \ref{fig:line_chart}, we show the confidence score of the correct class at different shift
+				positions on the right and the input image on the left. For ResNet (dotted-red line), the confidence
+				score varies a lot across different shift positions, AACNN (dotted-green line) has less variance and
+				sometimes achieves a higher confidence score when compared to ResNet. On the other hand, the confidence
+				score for both of our models (3D convolution and group convolution) are much more stable and has a
+				higher confidence score than ResNet and AACNN. <br><br>
+
+				In figure \ref{fig:failed_line_chart}, we show an example where our models have a lower confidence score
+				than the baseline model. However, in this case, our models' confidence scores our still much more stable
+				than the 2 baseline models. This shows that our method is more shift tolerant.
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<hr>
+	<table align=center width=850px>
+		<tr>
+			<td>
+				<h1>5. Conclusion</h1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Given that CNN is not shift-invariant, we proposed a shift-invariant model to replace any layers with
+				stride-2 down-sampling. Rearranging $4$ feature maps of $4$-neighbor from $4$ different offset preserves
+				all information. By applying group convolution or 3D convolution, our module prioritizes extracting
+				high-frequency spatial information first along the $D$ axis. Then, $1\times1$ convolution is used to
+				aggregate and resize. In our experiment, we replace several down-sampling layers with our module. Both
+				the quantitative and qualitative results show our robust performance when input images are shifted.
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<hr>
+	<table align=center width=850px>
+		<tr>
+			<td>
+				<h1>6. Future Work</h1>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Compared to simply using a Gaussian blur kernel to aggregate the information, we believe that by using
+				our shift-invariant modules with learnable parameters, we can help existing methods get good performance
+				when solving tasks that require sharp fine-grained pixel-level learning e.g., semantic segmentation or
+				conditioned image generation. Thus, we would like to test our modules on these tasks. <br>
+				Furthermore, to get more hints and insights into our module, we would like to analyze its property by
+				visualizing the filters and feature maps by various visualization techniques!
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<hr>
 	<center>
 		<h1>Code</h1>
 	</center>
@@ -364,8 +685,34 @@
 	</table>
 
 	<hr>
+	<table align=center width=850px>
+		<tr>
+			<td>
+				<h1>References</h1>
+			</td>
+		</tr>
+		<tr>
+			<td id="aacnn">
+				1. Richard Zhang. Making convolutional networks shift-invariant again. ICML 2019
+			</td>
+		</tr>
+		<tr>
+			<td id="group_conv">
+				2. Gao Huang, Shichen Liu, Laurens Van der Maaten, and Kilian Q Weinberger. Condensenet: An efficient
+				densenet using learned group convolutions. CVPR 2018
+			</td>
+		</tr>
+		<tr>
+			<td id="3d_conv">
+				3. D. Tran, L. Bourdev, R. Fergus, L. Torresani, and M. Paluri. Learning spatiotemporal features with 3d
+				convolutional networks. ICCV 2015
+			</td>
+		</tr>
+	</table>
 	<br>
 
+	<hr>
+	<br>
 	<table align=center width=900px>
 		<tr>
 			<td width=400px>
